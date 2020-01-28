@@ -59,7 +59,7 @@ def file_to_list(file_path):
     :return: List of strings
     """
 
-    # list of lines in file
+    # List of lines in file
     contents = []
 
     # Open file
@@ -93,7 +93,7 @@ def create_n_grams(data, n_grams=None, max_n_gram=7):
     # Fill n-gram dictionary
     for line in data:
 
-        # change text to lowercase
+        # Change text to lowercase
         line = line.lower()
 
         # Remove punctuation
@@ -102,11 +102,19 @@ def create_n_grams(data, n_grams=None, max_n_gram=7):
         # Split the line by space
         split = line.split()
 
-        # Create n-grams ranging from n=1 to n=7
+        # Create n-grams ranging from n=1 to n=max_n_gram
         for n in range(1, max_n_gram+1):
-            if len(split) > n:
+
+            # Check if current sentence is long enough to support the n-gram
+            if len(split) >= n:
                 current_n_grams = list(nltk.ngrams(split, n))
+
+                # Append each n-gram
                 for n_gram in current_n_grams:
                     n_grams[n].append(n_gram)
+
+            # else, sentence is too short for current n-gram and subsequent larger n-grams
+            else:
+                break
 
     return n_grams
