@@ -1,0 +1,4 @@
+# pycharm ide stuff
+.idea/
+__pycache__/
+venv/
