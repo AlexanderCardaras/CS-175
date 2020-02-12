@@ -4,6 +4,15 @@ import string
 import nltk
 
 
+# section 3151(e)(2) of this title
+# September 30, 2009,
+# paragraph (1)
+# subsection (a)
+# subparagraph (A)(iv)
+# clause (ii)
+# (D)
+# (1)
+
 def strip_json(file_path):
     """
     Strips lines of html and css. Converts file contents from dictionary to string format. Removes broken unicode
@@ -28,6 +37,28 @@ def strip_json(file_path):
 
             # Remove unicode that was decoded incorrectly (\\u201a, \\n, ...)
             stripped = re.sub(r'\\[\w][\d|\w][\d|\w][\d|\w][\d|\w]||\\n', '', stripped)
+
+            # Remove things like
+            # # section 3151(e)(2) of this title
+            # # September 30, 2009,
+            # # paragraph (1)
+            # # subsection (a)
+            # # subparagraph (A)(iv)
+            # # clause (ii)
+            # # (D)
+            # # (1)
+            stripped = re.sub(r"((\w+)\.?\s(\d+)\,\s(\d{4}))|"
+                              r"(\w*(?<=section).*of this title)|"
+                              r"(\w*(?<=sections).*of this title)|"
+                              r"(\w*(?<=section).*of title \d+)|"
+                              r"(\w*(?<=sections).*of title \d+)|"
+                              r"(paragraph \(\d+\))|"
+                              r"(subsection \(\w+\))|"
+                              r"(subparagraph \(\w+\)\(\w+\))|"
+                              r"(clause \(\w+\))|"
+                              r"(\(\w+\))|"
+                              r"(\(\d+\))"
+                              , "", stripped)
 
             # Add lines that have text on them
             if len(stripped) > 0:
