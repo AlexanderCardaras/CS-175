@@ -4,15 +4,6 @@ import string
 import nltk
 
 
-# section 3151(e)(2) of this title
-# September 30, 2009,
-# paragraph (1)
-# subsection (a)
-# subparagraph (A)(iv)
-# clause (ii)
-# (D)
-# (1)
-
 def strip_json(file_path):
     """
     Strips lines of html and css. Converts file contents from dictionary to string format. Removes broken unicode
@@ -39,14 +30,14 @@ def strip_json(file_path):
             stripped = re.sub(r'\\[\w][\d|\w][\d|\w][\d|\w][\d|\w]||\\n', '', stripped)
 
             # Remove things like
-            # # section 3151(e)(2) of this title
-            # # September 30, 2009,
-            # # paragraph (1)
-            # # subsection (a)
-            # # subparagraph (A)(iv)
-            # # clause (ii)
-            # # (D)
-            # # (1)
+            #   section 3151(e)(2) of this title
+            #   September 30, 2009,
+            #   paragraph (1)
+            #   subsection (a)
+            #   subparagraph (A)(iv)
+            #   clause (ii)
+            #   (D)
+            #   (1)
             stripped = re.sub(r"((\w+)\.?\s(\d+)\,\s(\d{4}))|"
                               r"(\w*(?<=section).*of this title)|"
                               r"(\w*(?<=sections).*of this title)|"
@@ -149,3 +140,33 @@ def create_n_grams(data, n_grams=None, max_n_gram=7):
                 break
 
     return n_grams
+
+
+def get_frequency(n_grams):
+    """
+    Finds the number of unique n-grams
+    :param n_grams: Dictionary of lists of n-grams
+    :return: Dictionary of lists of unique n-grams
+    """
+
+    # Unique n-grams
+    n_gram_frequency = {}
+
+    # Loop through all n-grams starting from 1-grams
+    for i in range(1, len(n_grams)+1):
+
+        # Create a dictionary for each layer (i) of n-grams
+        n_gram_frequency[i] = {}
+
+        # Loop through all the tokens in a layer and
+        for token in n_grams[i]:
+
+            # Add tokens to dictionary
+            if token not in n_gram_frequency[i]:
+                n_gram_frequency[i][token] = 1
+            else:
+
+                # Count number of times the specific token is repeated
+                n_gram_frequency[i][token] = n_gram_frequency[i][token] + 1
+
+    return n_gram_frequency
