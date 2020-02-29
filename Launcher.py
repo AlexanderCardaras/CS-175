@@ -8,6 +8,7 @@ raw_data_path = "res/raw_data.json"         # US code html
 parsed_data_path = "res/parsed_data.txt"    # US code parsed
 constitution_path = "res/constitution.txt"  # Constitution parsed
 haiku_path = "res/haiku.csv"                # Constitution parsed
+import pickle
 
 """ N-gram demo """
 # data = tokenizer.file_to_list(parsed_data_path)
@@ -84,6 +85,8 @@ haiku_path = "res/haiku.csv"                # Constitution parsed
 poems, syllables = hp.get_poems(haiku_path, sample_size=1)
 poems, syllables = hp.filter_poems(poems, syllables)
 model = he.get_heuristic(poems)
+# with open("get_heuristic_model.p", "wb") as f:
+#     pickle.dump(model, f)
 
 print("input:", poems[0][0])
 print("prediction:", he.classify(poems[0][0], model))
