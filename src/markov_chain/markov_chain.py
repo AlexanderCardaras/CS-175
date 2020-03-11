@@ -153,7 +153,7 @@ N = 2
 
 # Load compiled markov model
 # If this code failed, run build_model.py first
-with open('markov_chain/compiled_' + str(N) + '_order_model.json', 'r') as f:
+with open('src/markov_chain/compiled_' + str(N) + '_order_model.json', 'r') as f:
   text_model = markovify.Text.from_json(f.read())
 
 def count_syllables_in_word(word):

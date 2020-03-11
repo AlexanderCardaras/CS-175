@@ -1,8 +1,8 @@
-import rnn_gen
-from rnn_gen import get_data_from_file, RNNModule
+from src.rnn import rnn_gen
+from src.rnn.rnn_gen import get_data_from_file, RNNModule
 import torch
 from nltk.corpus import cmudict
-from sylco import sylco
+from src.rnn.sylco import sylco
 import numpy as np
 import string
 import pickle
@@ -11,15 +11,15 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.ml import classify
+from src.ml.heuristics import classify
 
-int_to_vocab, vocab_to_int, n_vocab, in_text, out_text = get_data_from_file("parsed_data.txt", rnn_gen.flags.batch_size, rnn_gen.flags.seq_size)
+int_to_vocab, vocab_to_int, n_vocab, in_text, out_text = get_data_from_file("src/rnn/parsed_data.txt", rnn_gen.flags.batch_size, rnn_gen.flags.seq_size)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-with open ('get_heuristic_model.p', 'rb') as f:
+with open ('src/rnn/get_heuristic_model.p', 'rb') as f:
     heuristic_model = pickle.load(f)
 
 net = RNNModule(n_vocab, rnn_gen.flags.seq_size, rnn_gen.flags.embedding_size, rnn_gen.flags.lstm_size)
-net.load_state_dict(torch.load('checkpoint_model/model-us-law-code.pth'))
+net.load_state_dict(torch.load('src/rnn/checkpoint_model/model-us-law-code.pth', map_location=torch.device('cpu')))
 net = net.to(device)
 CMUDICT = cmudict.dict()
 
@@ -113,10 +113,12 @@ def predict_haiku_line(device, net, words, n_vocab, vocab_to_int, int_to_vocab, 
     choice = np.random.choice(choices[0])
     return (int_to_vocab[choice], state_h, state_c)
 
-for x in range(0, 10):
-    first_line = predict_haiku_line(device, net, ['Such', 'court'], n_vocab, vocab_to_int, int_to_vocab, 5)
-    second_line = predict_haiku_line(device, net, [first_line[0]], n_vocab, vocab_to_int, int_to_vocab, 7, first_line[1], first_line[2])
-    third_line = predict_haiku_line(device, net, [second_line[0]], n_vocab, vocab_to_int, int_to_vocab, 5, second_line[1], second_line[2])
-    print(" ")
+
+def call_me():
+    for x in range(0, 1):
+        first_line = predict_haiku_line(device, net, ['Such', 'court'], n_vocab, vocab_to_int, int_to_vocab, 5)
+        second_line = predict_haiku_line(device, net, [first_line[0]], n_vocab, vocab_to_int, int_to_vocab, 7, first_line[1], first_line[2])
+        third_line = predict_haiku_line(device, net, [second_line[0]], n_vocab, vocab_to_int, int_to_vocab, 5, second_line[1], second_line[2])
+        print(" ")
 
 

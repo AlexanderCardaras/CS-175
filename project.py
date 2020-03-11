@@ -1,5 +1,6 @@
 from src.markov_chain.markov_chain import gen_haiku
-import subprocess
+from src.rnn import generate_text
+
 """
 Generate 5 random haikus
 """
@@ -10,4 +11,6 @@ if __name__ == '__main__':
     if s is not None:
       print('\n'.join(s))
       break
-  subprocess.check_call(['python', 'generate_text.py'], cwd='./rnn/')
+
+  print("")
+  generate_text.call_me()
