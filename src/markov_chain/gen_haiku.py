@@ -1,5 +1,3 @@
-from markov_chain import gen_haiku
-
 """
 Generate 5 random haikus
 """

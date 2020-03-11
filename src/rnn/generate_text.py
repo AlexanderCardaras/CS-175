@@ -1,11 +1,9 @@
 import rnn_gen
 from rnn_gen import get_data_from_file, RNNModule
 import torch
-from argparse import Namespace
 from nltk.corpus import cmudict
 from sylco import sylco
 import numpy as np
-import random
 import string
 import pickle
 
@@ -13,7 +11,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from ml.heuristics import classify
+from src.ml import classify
 
 int_to_vocab, vocab_to_int, n_vocab, in_text, out_text = get_data_from_file("parsed_data.txt", rnn_gen.flags.batch_size, rnn_gen.flags.seq_size)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

@@ -1,4 +1,4 @@
-from data_parser import tokenizer
+from src.data_parser import tokenizer
 import pandas as pd
 import nltk
 import numpy as np

@@ -1,5 +1,4 @@
-from markov_chain.markov_chain import gen_haiku
-import os
+from src.markov_chain.markov_chain import gen_haiku
 import subprocess
 """
 Generate 5 random haikus

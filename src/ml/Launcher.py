@@ -1,14 +1,10 @@
-from data_parser import haiku_parser as hp
-from ml import logistic_regressor as lr
-from ml import decision_trees as dt
-from ml import heuristics as he
-import numpy as np
+from src.data_parser import haiku_parser as hp
+from src.ml import heuristics as he
 
 raw_data_path = "res/raw_data.json"         # US code html
 parsed_data_path = "res/parsed_data.txt"    # US code parsed
 constitution_path = "res/constitution.txt"  # Constitution parsed
 haiku_path = "res/haiku.csv"                # Constitution parsed
-import pickle
 
 """ N-gram demo """
 # data = tokenizer.file_to_list(parsed_data_path)

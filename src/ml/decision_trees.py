@@ -2,7 +2,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import tree
 from nltk.data import load
 import numpy as np
-from data_parser import haiku_parser as hp
+from src.data_parser import haiku_parser as hp
 from sklearn.metrics import roc_curve, auc
 
 

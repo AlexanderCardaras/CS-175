@@ -1,4 +1,4 @@
-from data_parser import haiku_parser as hp
+from src.data_parser import haiku_parser as hp
 
 
 def line_to_pos(line):

@@ -2,7 +2,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import linear_model
 from nltk.data import load
 import numpy as np
-from data_parser import haiku_parser as hp
+from src.data_parser import haiku_parser as hp
 
 tags = list(load('help/tagsets/upenn_tagset.pickle').keys())
 
